@@ -1,4 +1,4 @@
-import firebase_admin as fb # install with 'pip install firebase_admin'
+from firebase_admin import credentials, db, initialize_app # install with 'pip install firebase_admin'
 
 class firebase_database():
 	def __init__(self, key_file, database_url):
@@ -6,8 +6,8 @@ class firebase_database():
 			key_file : Fichier de clé
 			database_url : url de la db
 		"""
-		firebase_credentials = fb.credentials.Certificate(key_file)
-		fb.initialize_app(firebase_credentials, {"databaseURL":database_url})
+		firebase_credentials = credentials.Certificate(key_file)
+		initialize_app(firebase_credentials, {"databaseURL":database_url})
 
 
 	def write(self, noeud, data, prevent_erase = True):
@@ -18,7 +18,7 @@ class firebase_database():
 		"""
 
 		# On définit le noeud
-		fb_noeud = fb.db.reference(noeud)
+		fb_noeud = db.reference(noeud)
 
 		# On regarde si le noeud existe déjà
 		if prevent_erase and fb_noeud.get() is not None:
@@ -29,3 +29,11 @@ class firebase_database():
 		fb_noeud.update(data)
 
 		return True
+
+
+	def read(self, noeud):
+		""" Lecture des données à partir du noeud spécifié """
+
+		# On défini le noeud
+		fb_noeud = db.reference(noeud)
+		return fb_noeud.get()
