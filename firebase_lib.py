@@ -31,7 +31,7 @@ class firebase_database():
 		return True
 
 
-	def read(self, noeud):
+	def read(self, noeud=""):
 		""" Lecture des données à partir du noeud spécifié """
 
 		# On défini le noeud
