@@ -12,6 +12,7 @@ class firebase_database():
 
 	def write(self, noeud, data, prevent_erase = True):
 		""" Ecriture d'une donnée sur un noeud spécifié 
+			Ecrit tout le noeud
 			noeud : chemin du noeud depuis la racine
 			data : données à écrire (dictionnaire)
 			prevent_erase : si True, n'écrase pas le noeud s'il existe déjà
@@ -27,6 +28,27 @@ class firebase_database():
 
 		# On écrit les données
 		fb_noeud.update(data)
+
+		return True
+
+	def update(self, noeud, data):
+		""" Ecriture (mise à jour) d'une donnée sur un noeud spécifié 
+			noeud : chemin du noeud depuis la racine
+			data : données à écrire (dictionnaire)
+		"""
+
+		if type(data) != dict:
+			raise TypeError("Data doit être un dictionnaire, pour écrire une valeur unique, utilisez la méthode 'write'")
+
+		# On défini le noeud
+		fb_noeud = db.reference(noeud)
+		# On récupère le contenu du noeud
+		noeud_data = fb_noeud.get()
+		# On modifie les valeurs du noeud
+		for key, item in data.items():
+			noeud_data[key] = item
+		# On renvoie le noeud
+		fb_noeud.update(noeud_data)
 
 		return True
 
