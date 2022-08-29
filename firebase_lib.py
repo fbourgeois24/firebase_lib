@@ -1,4 +1,4 @@
-from firebase_admin import credentials, db, initialize_app # install with 'pip install firebase_admin'
+from firebase_admin import credentials, db, initialize_app, delete_app # install with 'pip install firebase_admin'
 
 class firebase_database():
 	def __init__(self, key_file, database_url):
@@ -7,7 +7,7 @@ class firebase_database():
 			database_url : url de la db
 		"""
 		firebase_credentials = credentials.Certificate(key_file)
-		initialize_app(firebase_credentials, {"databaseURL":database_url})
+		self.db = initialize_app(firebase_credentials, {"databaseURL":database_url})
 
 
 	def write(self, noeud, data, prevent_erase = True):
@@ -59,3 +59,9 @@ class firebase_database():
 		# On défini le noeud
 		fb_noeud = db.reference(noeud)
 		return fb_noeud.get()
+
+
+	def close(self):
+		""" Détruire l'objet """
+
+		delete_app(self.db)
