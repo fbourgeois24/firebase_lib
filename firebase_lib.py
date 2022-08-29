@@ -19,7 +19,7 @@ class firebase_database():
 		"""
 
 		# On définit le noeud
-		fb_noeud = self.db.reference(noeud)
+		fb_noeud = db.reference(noeud, app=self.db)
 
 		# On regarde si le noeud existe déjà
 		if prevent_erase and fb_noeud.get() is not None:
@@ -41,7 +41,7 @@ class firebase_database():
 			raise TypeError("Data doit être un dictionnaire, pour écrire une valeur unique, utilisez la méthode 'write'")
 
 		# On défini le noeud
-		fb_noeud = self.db.reference(noeud)
+		fb_noeud = db.reference(noeud, app=self.db)
 		# On récupère le contenu du noeud
 		noeud_data = fb_noeud.get()
 		# On modifie les valeurs du noeud
@@ -57,7 +57,7 @@ class firebase_database():
 		""" Lecture des données à partir du noeud spécifié """
 
 		# On défini le noeud
-		fb_noeud = self.db.reference(noeud)
+		fb_noeud = db.reference(noeud, app=self.db)
 		return fb_noeud.get()
 
 
