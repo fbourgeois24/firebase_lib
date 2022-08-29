@@ -1,13 +1,13 @@
 from firebase_admin import credentials, db, initialize_app, delete_app # install with 'pip install firebase_admin'
 
 class firebase_database():
-	def __init__(self, key_file, database_url):
+	def __init__(self, key_file, database_url, name="default_firebase_app"):
 		""" Constructeur de la classe 
 			key_file : Fichier de clé
 			database_url : url de la db
 		"""
 		firebase_credentials = credentials.Certificate(key_file)
-		self.db = initialize_app(firebase_credentials, {"databaseURL":database_url})
+		self.db = initialize_app(firebase_credentials, {"databaseURL":database_url}, name)
 
 
 	def write(self, noeud, data, prevent_erase = True):
