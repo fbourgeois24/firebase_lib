@@ -52,6 +52,17 @@ class firebase_database():
 
 		return True
 
+	def delete(self, noeud):
+		""" Supprimer un noeud """
+
+		# On défini le noeud
+		fb_noeud = db.reference(noeud, app=self.db)
+
+		# On supprime le noeud
+		fb_noeud.delete()
+
+		return True
+
 
 	def read(self, noeud=""):
 		""" Lecture des données à partir du noeud spécifié """
